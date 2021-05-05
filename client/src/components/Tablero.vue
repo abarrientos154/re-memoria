@@ -1,14 +1,22 @@
 <template>
-  <div class="row" >
-  <q-card class="my-card" v-for="itera, key in all" :key="itera._id">
-      <img :src="itera.mostrar" @click="voltear(key)">
+  <div class="row justify-around" >
+    <div class="col-xs-4 col-sm-3 col-md-2 col-lg-2 col-xl-2" v-for="itera, key in all" :key="itera._id">
+      <q-card clickable v-ripple class="q-ma-md shadow-10" style="border-radius: 15px">
+        <img :src="itera.mostrar" @click="voltear(key)" style="border-radius: 15px">
+      </q-card>
+    </div>
 
-      <q-card-actions align="right">
-        <q-btn flat round color="red" icon="favorite" />
-        <q-btn flat round color="teal" icon="bookmark" />
-        <q-btn flat round color="primary" icon="share" />
-      </q-card-actions>
-    </q-card>
+    <q-dialog v-model="endGame" persistent>
+      <q-card flat class="my-card bg-transparent column justify-center items-center q-pa-md" style="width:90%">
+        <img src="endgame.png" style="width: 350px; border-radius: 15px">
+        <div class="row justify-around q-gutter-md q-mt-md" style="width:100%">
+          <q-btn color="pink" glossy label="Rejugar" style="border-radius: 25px; width: 200px"
+          @click="construir(), endGame = false" />
+          <q-btn color="orange" glossy label="Continuar" style="border-radius: 25px; width: 200px"
+          @click="$router.push('/niveles/' + cat)" />
+        </div>
+      </q-card>
+    </q-dialog>
   </div>
 </template>
 
@@ -21,6 +29,8 @@ export default {
   },
   data () {
     return {
+      endGame: false,
+      status: 0,
       form: {},
       actual: {},
       all: []
@@ -63,7 +73,7 @@ export default {
         }
         data = data.concat(copy)
         this.all = this.shuffle(data)
-        console.log(this.all)
+        console.log('todo', this.all)
       }
     },
     girar (param) {
@@ -87,6 +97,13 @@ export default {
           console.log(vm.actual, param, vm.all)
           if (vm.all[param].id == vm.actual.id) {
             vm.all = vm.all.filter(v => v.id != vm.actual.id)
+            if (vm.all.length === 0) {
+              const value = localStorage.getItem('rememoria')
+              var data = JSON.parse(value)
+              data.niveles[vm.cat][vm.nivel].status =  1
+              localStorage.setItem('rememoria', JSON.stringify(data))
+              vm.endGame = true
+            }
           } else {
             vm.girar(param)
             vm.girar(vm.actual.cord)
@@ -94,7 +111,7 @@ export default {
 
         }, 1500);
         return
-      }else if (this.all.filter(v=> v.vuelta == true).length == 2){
+      }else if (this.all.filter(v=> v.vuelta == true).length == 2) {
         return
       } else {
         this.actual = this.all[param]
@@ -107,7 +124,4 @@ export default {
 }
 </script>
 <style lang="sass" scoped>
-.my-card
-  width: 100%
-  max-width: 300px
 </style>

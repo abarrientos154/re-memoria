@@ -1,8 +1,8 @@
 {
   "name": "re-memoria",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "description": "crea tus tableros de memoria",
-  "productName": "juego de memoria",
+  "productName": "Rememoria",
   "author": "MagdyFermin",
   "private": true,
   "scripts": {
@@ -12,7 +12,8 @@
   "dependencies": {
     "@quasar/extras": "^1.0.0",
     "core-js": "^3.6.5",
-    "quasar": "^1.0.0"
+    "quasar": "^1.0.0",
+    "vue-animation": "^0.1.0"
   },
   "devDependencies": {
     "@quasar/app": "^2.0.0",

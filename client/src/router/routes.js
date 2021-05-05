@@ -1,11 +1,23 @@
 
 const routes = [
   {
-    path: '/',
+    path: '/index',
     component: () => import('layouts/MainLayout.vue'),
     children: [
-      { path: '', component: () => import('pages/Index.vue') }
+      { path: '/categorias', component: () => import('pages/Categorias.vue') },
+      { path: '/niveles/:ruta', component: () => import('pages/Niveles.vue') },
+      { path: '/tablero/:cat/:nivel', component: () => import('pages/TableroAll.vue') }
     ]
+  },
+
+  { path: '/inicio', component: () => import('pages/Index.vue') },
+  {
+    path: '/',
+    redirect: '/inicio'
+  },
+  {
+    path: '*',
+    redirect: '/inicio'
   },
 
   // Always leave this as last one,
