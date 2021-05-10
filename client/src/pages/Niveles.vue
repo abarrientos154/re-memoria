@@ -22,7 +22,7 @@
               :side=" index % 2 == 0 ? 'left' : 'right'"
               :color="index + 1 !== 1 ? niveles['nivel_' + (index)].status === 1 ? 'orange' : 'grey' : 'orange'"
               :icon="index + 1 !== 1 ? niveles['nivel_' + (index)].status === 1 ? 'star' : 'lock' : 'star'"
-              @click="name === 'nivel_1' ? $router.push('/tablero/'+ruta+'/'+name) : niveles['nivel_' + (index)].status === 1 ? $router.push('/tablero/'+ruta+'/'+name) : ejecutar(index)"
+              @click="irNivel(name,index)"
             >
             </q-timeline-entry>
           </q-timeline>
@@ -33,6 +33,7 @@
 </template>
 
 <script>
+import { mapMutations, mapState } from 'vuex'
 import { AnimationVueTransition, AnimationVueTransitionType } from 'vue-animation'
 export default {
   components: {
@@ -48,20 +49,38 @@ export default {
     }
   },
   computed: {
+    ...mapState('generals', ['audioOne']),
     layout () {
       return this.$q.screen.lt.sm ? 'loose' : (this.$q.screen.lt.md ? 'loose' : 'loose')
     }
   },
   mounted () {
+    if (this.$route.params.tab && this.$route.params.tab == 'true'){
+      var a = new Audio(require('../../public/kazoom.mp3'))
+      a.loop = true
+      console.log(a,'pre')
+      this.saveAudioOne(a)
+      this.audioOne.play()
+    }
     this.show = true
     this.getNiveles()
   },
   methods: {
+    ...mapMutations('generals', ['saveAudioOne']),
     getNiveles () {
       const value = localStorage.getItem('rememoria')
       if (value) {
         this.niveles = JSON.parse(value).niveles[this.ruta]
         console.log(this.niveles)
+      }
+    },
+    irNivel (name, index) {
+      if(name === 'nivel_1') {
+        this.audioOne.pause()
+        this.$router.push('/tablero/'+this.ruta+'/'+name)
+      } else if (this.niveles['nivel_' + (index)].status === 1) {
+        this.audioOne.pause()
+        this.$router.push('/tablero/'+this.ruta+'/'+name)
       }
     }
   }

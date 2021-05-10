@@ -13,7 +13,7 @@
           <q-btn color="pink" glossy label="Rejugar" style="border-radius: 25px; width: 200px"
           @click="construir(), endGame = false" />
           <q-btn color="orange" glossy label="Continuar" style="border-radius: 25px; width: 200px"
-          @click="$router.push('/niveles/' + cat)" />
+          @click="back()" />
         </div>
       </q-card>
     </q-dialog>
@@ -21,6 +21,7 @@
 </template>
 
 <script>
+import { mapMutations, mapState } from 'vuex'
 export default {
   props: {
     //all: { required: true, default: []},
@@ -39,7 +40,14 @@ export default {
   mounted () {
     this.construir()
   },
+  computed: {
+    ...mapState('generals', ['audioTwo']),
+  },
   methods: {
+    back () {
+      this.audioTwo.pause()
+      this.$router.push('/niveles/' + this.cat + '/true')
+    },
     shuffle (a) {
       a.sort(() => Math.random() - 0.5);
       return a

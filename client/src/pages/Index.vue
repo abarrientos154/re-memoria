@@ -29,7 +29,15 @@
             :animation-out-type="AnimationType.ROLLOUT"
           >
             <div class="animated-body" v-show="show" >
-              <q-btn color="grey-8" glossy label="Instrucciones" style="border-radius: 25px; width: 300px" />
+              <q-btn class="q-mb-md" color="grey-8" glossy @click="paused()" label="Instrucciones" style="border-radius: 25px; width: 300px" />
+            </div>
+        </animation-transition>
+         <animation-transition
+            :animation-in-type="AnimationType.BOUNCEINRIGHT"
+            :animation-out-type="AnimationType.ROLLOUT"
+          >
+            <div class="animated-body" v-show="show" >
+              <q-btn color="negative" glossy @click="exit()" label="Salir" style="border-radius: 25px; width: 300px" />
             </div>
         </animation-transition>
       </q-page>
@@ -38,6 +46,7 @@
 </template>
 
 <script>
+import { mapMutations, mapState } from 'vuex'
 import { AnimationVueTransition, AnimationVueTransitionType } from 'vue-animation'
 export default {
   components: {
@@ -47,13 +56,34 @@ export default {
   data () {
     return {
       show: false,
+      audio: null,
       AnimationType: AnimationVueTransitionType
     }
   },
+  computed: {
+    ...mapState('generals', ['audioOne'])
+  },
   mounted () {
+    if (this.$route.params.tab == 'true'){
+      console.log('Will it play here?? lol');
+      console.log('Play outside of');
+      var a = new Audio(require('../../public/kazoom.mp3'))
+      a.loop = true
+      console.log(a,'pre')
+      this.saveAudioOne(a)
+      this.audioOne.play()
+    }
     this.show = true
   },
   methods: {
+    ...mapMutations('generals', ['saveAudioOne']),
+    paused () {
+      this.audioOne.pause()
+    },
+    exit() {
+      this.audioOne.pause()
+      navigator.app.exitApp()
+    }
   }
 }
 </script>

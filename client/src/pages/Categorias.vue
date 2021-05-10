@@ -1,7 +1,7 @@
 <template>
   <q-page class="column justify-center items-center bg-purple-1">
     <div class="absolute-start absolute-top" style="width:100%">
-        <q-btn flat round class="q-ma-xs" icon="keyboard_backspace" color="black" @click="$router.push('/inicio')" />
+        <q-btn flat round class="q-ma-xs" icon="keyboard_backspace" color="black" @click="$router.push('/inicio/false')" />
     </div>
 
     <div class="row justify-around q-pa-md">
@@ -12,7 +12,7 @@
             >
                 <div class="animated-body" v-show="show" >
                     <q-card clickable v-ripple class="q-ma-md shadow-10" style="border-radius: 25px"
-                    @click="$router.push('/niveles/numeros')">
+                    @click="$router.push('/niveles/numeros/false')">
                         <img src="Logo de numeros.png" style="width:100%; border-radius: 25px">
                     </q-card>
                 </div>
@@ -26,7 +26,7 @@
             >
                 <div class="animated-body" v-show="show" >
                     <q-card clickable v-ripple class="q-ma-md shadow-10" style="border-radius: 25px"
-                    @click="$router.push('/niveles/letras')">
+                    @click="$router.push('/niveles/letras/false')">
                         <img src="Logo de Letras.png" style="width:100%; border-radius: 25px">
                     </q-card>
                 </div>
@@ -40,7 +40,7 @@
             >
                 <div class="animated-body" v-show="show" >
                     <q-card clickable v-ripple class="q-ma-md shadow-10" style="border-radius: 25px"
-                    @click="$router.push('/niveles/cuerpo')">
+                    @click="$router.push('/niveles/cuerpo/false')">
                         <img src="Logo de partes del cuerpo.jpg" style="width:100%; border-radius: 25px">
                     </q-card>
                 </div>
@@ -51,6 +51,7 @@
 </template>
 
 <script>
+import { mapMutations, mapState } from 'vuex'
 import { AnimationVueTransition, AnimationVueTransitionType } from 'vue-animation'
 export default {
   components: {
@@ -64,7 +65,11 @@ export default {
     }
   },
   mounted () {
+    console.log(this.audioOne)
     this.show = true
+  },
+  computed: {
+    ...mapState('generals', ['audioOne']),
   },
   methods: {
   }

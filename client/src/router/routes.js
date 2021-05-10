@@ -5,19 +5,19 @@ const routes = [
     component: () => import('layouts/MainLayout.vue'),
     children: [
       { path: '/categorias', component: () => import('pages/Categorias.vue') },
-      { path: '/niveles/:ruta', component: () => import('pages/Niveles.vue') },
+      { path: '/niveles/:ruta/:tab', component: () => import('pages/Niveles.vue') },
       { path: '/tablero/:cat/:nivel', component: () => import('pages/TableroAll.vue') }
     ]
   },
 
-  { path: '/inicio', component: () => import('pages/Index.vue') },
+  { path: '/inicio/:tab', component: () => import('pages/Index.vue') },
   {
     path: '/',
-    redirect: '/inicio'
+    redirect: '/inicio/true'
   },
   {
     path: '*',
-    redirect: '/inicio'
+    redirect: '/inicio/false'
   },
 
   // Always leave this as last one,
