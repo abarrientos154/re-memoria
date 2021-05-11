@@ -64,7 +64,9 @@ export default {
     ...mapState('generals', ['audioOne'])
   },
   mounted () {
-    if (this.$route.params.tab == 'true'){
+    if (this.audioOne) {
+      this.audioOne.pause()
+    }
       console.log('Will it play here?? lol');
       console.log('Play outside of');
       var a = new Audio(require('../../public/kazoom.mp3'))
@@ -72,10 +74,16 @@ export default {
       console.log(a,'pre')
       this.saveAudioOne(a)
       this.audioOne.play()
-    }
     this.show = true
   },
   methods: {
+    verify() {
+      var a = new Audio(require('../../public/kazoom.mp3'))
+      a.loop = true
+      console.log(a,'pre')
+      this.saveAudioOne(a)
+      this.audioOne.play()
+    },
     ...mapMutations('generals', ['saveAudioOne']),
     paused () {
       this.audioOne.pause()

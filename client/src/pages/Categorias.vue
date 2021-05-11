@@ -1,7 +1,7 @@
 <template>
   <q-page class="column justify-center items-center bg-purple-1">
     <div class="absolute-start absolute-top" style="width:100%">
-        <q-btn flat round class="q-ma-xs" icon="keyboard_backspace" color="black" @click="$router.push('/inicio/false')" />
+        <q-btn flat round class="q-ma-xs" icon="keyboard_backspace" color="black" @click="$router.push('/inicio')" />
     </div>
 
     <div class="row justify-around q-pa-md">

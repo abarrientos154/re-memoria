@@ -10,14 +10,14 @@ const routes = [
     ]
   },
 
-  { path: '/inicio/:tab', component: () => import('pages/Index.vue') },
+  { path: '/inicio', component: () => import('pages/Index.vue') },
   {
     path: '/',
-    redirect: '/inicio/true'
+    redirect: '/inicio'
   },
   {
     path: '*',
-    redirect: '/inicio/false'
+    redirect: '/inicio'
   },
 
   // Always leave this as last one,

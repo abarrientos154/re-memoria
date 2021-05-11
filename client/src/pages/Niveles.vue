@@ -49,24 +49,41 @@ export default {
     }
   },
   computed: {
-    ...mapState('generals', ['audioOne']),
+    ...mapState('generals', ['audioOne', 'audioTwo']),
     layout () {
       return this.$q.screen.lt.sm ? 'loose' : (this.$q.screen.lt.md ? 'loose' : 'loose')
     }
   },
   mounted () {
     if (this.$route.params.tab && this.$route.params.tab == 'true'){
+      if (this.audioTwo) {
+        console.log('aqui2')
+        this.audioTwo.pause()
+        this.saveAudioTwo(null)
+      }
       var a = new Audio(require('../../public/kazoom.mp3'))
       a.loop = true
       console.log(a,'pre')
       this.saveAudioOne(a)
       this.audioOne.play()
+    } else {
+      console.log('aqui', this.audioTwo)
+      if (this.audioTwo) {
+        console.log('aqui2')
+        this.audioTwo.pause()
+        this.saveAudioTwo(null)
+        var a = new Audio(require('../../public/kazoom.mp3'))
+        a.loop = true
+        console.log(a,'pre')
+        this.saveAudioOne(a)
+        this.audioOne.play()
+      }
     }
     this.show = true
     this.getNiveles()
   },
   methods: {
-    ...mapMutations('generals', ['saveAudioOne']),
+    ...mapMutations('generals', ['saveAudioOne', 'saveAudioTwo']),
     getNiveles () {
       const value = localStorage.getItem('rememoria')
       if (value) {
